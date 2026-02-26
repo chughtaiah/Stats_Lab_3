@@ -1,116 +1,88 @@
-# Linear & Logistic Regression
+# Prob and Stats Lab – Discrete Probability Distributions
 
-This lab focuses ONLY on:
-- Linear Regression (Diabetes dataset)
-- Logistic Regression (Breast Cancer dataset)
+Follow the instructions in each function carefully.
+DO NOT change function names.
+Use random_state=42 where required.
 
-You will implement full supervised learning workflows
-and analyze model performance, stability, and overfitting.
+IMPORTANT:
+Whenever absolute error is requested, compute:
 
-------------------------------------------------------------
-DATASETS USED
-------------------------------------------------------------
-1. sklearn.datasets.load_diabetes()
-   → Regression task
+    absolute_error = abs(empirical_value − theoretical_value)
 
-2. sklearn.datasets.load_breast_cancer()
-   → Binary classification task
+--------------------------------------------------------
 
-------------------------------------------------------------
-ALLOWED LIBRARIES
-------------------------------------------------------------
-- numpy
-- scikit-learn
+QUESTION 1 – Card Experiment (Without Replacement)
 
-DO NOT use:
-- Deep learning libraries
-- Any model other than LinearRegression and LogisticRegression
+Two cards are drawn WITHOUT replacement from a 52-card deck.
 
-------------------------------------------------------------
-GENERAL REQUIREMENTS
-------------------------------------------------------------
-- Follow function signatures EXACTLY.
-- Do NOT modify function names.
-- All functions must return values.
-- Use StandardScaler for feature scaling.
-- Split data using 80-20 train-test split.
-- Use random_state=42 for reproducibility.
-- Comment clearly where explanation is required.
+Let:
+A = first card is an Ace
+B = second card is an Ace
 
-------------------------------------------------------------
-QUESTION 1 (Linear Regression Pipeline)
-------------------------------------------------------------
-Using diabetes dataset:
+Compute:
+- P(A)
+- P(B)
+- P(B | A)
+- P(A ∩ B)
 
-1. Load dataset.
-2. Split into train and test (80-20).
-3. Standardize features (fit only on train).
-4. Train LinearRegression model.
-5. Compute:
-   - Train MSE
-   - Test MSE
-   - Train R²
-   - Test R²
-6. Identify top 3 features with largest absolute coefficients.
-7. In comments:
-   - Does the model overfit?
-   - Why is feature scaling important?
+Check independence:
+P(A ∩ B) ?= P(A)P(B)
 
-------------------------------------------------------------
-QUESTION 2 (Cross-Validation – Linear Regression)
-------------------------------------------------------------
-1. Perform 5-fold cross-validation on LinearRegression.
-2. Compute mean and standard deviation of R².
-3. Compare CV mean with test R² from Q1.
-4. In comments:
-   - What does standard deviation represent?
-   - How does CV reduce variance risk?
+Simulate 200,000 experiments and estimate:
+- empirical P(A)
+- empirical P(B | A)
 
-------------------------------------------------------------
-QUESTION 3 (Logistic Regression Pipeline)
-------------------------------------------------------------
-Using breast cancer dataset:
+Compute absolute error between:
+- theoretical P(B | A)
+- empirical P(B | A)
 
-1. Split into train-test (80-20).
-2. Standardize features.
-3. Train LogisticRegression (max_iter=5000).
-4. Compute:
-   - Train Accuracy
-   - Test Accuracy
-   - Precision
-   - Recall
-   - F1-score
-   - Confusion matrix
-5. In comments:
-   - What does a False Negative mean in medical context?
+--------------------------------------------------------
 
-------------------------------------------------------------
-QUESTION 4 (Regularization in Logistic Regression)
-------------------------------------------------------------
-Train LogisticRegression for:
+QUESTION 2 – Bernoulli (Light Bulb)
 
-C = [0.01, 0.1, 1, 10, 100]
+A light bulb is defective with probability p = 0.05.
 
-For each C:
-- Compute train accuracy
-- Compute test accuracy
+Compute:
+- Theoretical P(X = 1)
+- Theoretical P(X = 0)
+- Empirical P(X = 1)
+- Absolute error
 
-Return dictionary:
-{C: (train_acc, test_acc)}
+--------------------------------------------------------
 
-In comments:
-- What happens when C is very small?
-- What happens when C is very large?
-- Which case leads to overfitting?
+QUESTION 3 – Binomial (10 Bulbs)
 
-------------------------------------------------------------
-QUESTION 5 (Cross-Validation – Logistic Regression)
-------------------------------------------------------------
-1. Perform 5-fold cross-validation (C=1).
-2. Compute:
-   - Mean accuracy
-   - Std accuracy
-3. Compare CV mean with test accuracy.
-4. In comments:
-   - Why is cross-validation critical in medical diagnosis?
+Inspect 10 bulbs independently.
 
+Compute:
+- Theoretical P(X = 0)
+- Theoretical P(X = 2)
+- Theoretical P(X ≥ 1)
+- Empirical P(X ≥ 1)
+- Absolute error
+
+--------------------------------------------------------
+
+QUESTION 4 – Geometric (Die Until 6)
+
+Roll a fair die repeatedly until a 6 appears.
+
+Compute:
+- Theoretical P(X = 1)
+- Theoretical P(X = 3)
+- Theoretical P(X > 4)
+- Empirical P(X > 4)
+- Absolute error
+
+--------------------------------------------------------
+
+QUESTION 5 – Poisson (Customers per Hour)
+
+Customers arrive at rate λ = 12 per hour.
+
+Compute:
+- Theoretical P(X = 0)
+- Theoretical P(X = 15)
+- Theoretical P(X ≥ 18)
+- Empirical P(X ≥ 18)
+- Absolute error
