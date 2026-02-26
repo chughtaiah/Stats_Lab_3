@@ -1,173 +1,193 @@
 """
-Linear & Logistic Regression Lab
+Prob and Stats Lab – Discrete Probability Distributions
 
 Follow the instructions in each function carefully.
 DO NOT change function names.
-Use random_state=42 everywhere required.
+Use random_state=42 where required.
 """
 
 import numpy as np
-
-from sklearn.datasets import load_diabetes, load_breast_cancer
-from sklearn.model_selection import train_test_split, cross_val_score
-from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import LinearRegression, LogisticRegression
-from sklearn.metrics import (
-    mean_squared_error,
-    r2_score,
-    accuracy_score,
-    precision_score,
-    recall_score,
-    f1_score,
-    confusion_matrix
-)
+import math
 
 
 # =========================================================
-# QUESTION 1 – Linear Regression Pipeline (Diabetes)
+# QUESTION 1 – Card Experiment
 # =========================================================
 
-def diabetes_linear_pipeline():
+def card_experiment():
     """
-    STEP 1: Load diabetes dataset.
-    STEP 2: Split into train and test (80-20).
+    STEP 1: Consider a standard 52-card deck.
+            Assume 4 Aces.
+
+    STEP 2: Compute analytically:
+            - P(A)
+            - P(B)
+            - P(B | A)
+            - P(A ∩ B)
+
+    STEP 3: Check independence:
+            P(A ∩ B) ?= P(A)P(B)
+
+    STEP 4: Simulate 200,000 experiments
+            WITHOUT replacement.
             Use random_state=42.
-    STEP 3: Standardize features using StandardScaler.
-            IMPORTANT:
-            - Fit scaler only on X_train
-            - Transform both X_train and X_test
-    STEP 4: Train LinearRegression model.
-    STEP 5: Compute:
-            - train_mse
-            - test_mse
-            - train_r2
-            - test_r2
-    STEP 6: Identify indices of top 3 features
-            with largest absolute coefficients.
+
+            Estimate:
+            - empirical P(A)
+            - empirical P(B | A)
+
+    STEP 5: Compute absolute error BETWEEN:
+            theoretical P(B | A)
+            empirical P(B | A)
 
     RETURN:
-        train_mse,
-        test_mse,
-        train_r2,
-        test_r2,
-        top_3_feature_indices (list length 3)
+        P_A,
+        P_B,
+        P_B_given_A,
+        P_AB,
+        empirical_P_A,
+        empirical_P_B_given_A,
+        absolute_error
     """
 
     raise NotImplementedError
 
 
 # =========================================================
-# QUESTION 2 – Cross-Validation (Linear Regression)
+# QUESTION 2 – Bernoulli
 # =========================================================
 
-def diabetes_cross_validation():
+def bernoulli_lightbulb(p=0.05):
     """
-    STEP 1: Load diabetes dataset.
-    STEP 2: Standardize entire dataset (after splitting is NOT needed for CV,
-            but use pipeline logic manually).
-    STEP 3: Perform 5-fold cross-validation
-            using LinearRegression.
-            Use scoring='r2'.
+    STEP 1: Define Bernoulli(p) PMF:
+            p_X(x) = p^x (1-p)^(1-x)
 
-    STEP 4: Compute:
-            - mean_r2
-            - std_r2
+    STEP 2: Compute theoretical:
+            - P(X = 1)
+            - P(X = 0)
+
+    STEP 3: Simulate 100,000 bulbs
+            using random_state=42.
+
+    STEP 4: Compute empirical:
+            - empirical P(X = 1)
+
+    STEP 5: Compute absolute error BETWEEN:
+            theoretical P(X = 1)
+            empirical P(X = 1)
 
     RETURN:
-        mean_r2,
-        std_r2
+        theoretical_P_X_1,
+        theoretical_P_X_0,
+        empirical_P_X_1,
+        absolute_error
     """
 
     raise NotImplementedError
 
 
 # =========================================================
-# QUESTION 3 – Logistic Regression Pipeline (Cancer)
+# QUESTION 3 – Binomial
 # =========================================================
 
-def cancer_logistic_pipeline():
+def binomial_bulbs(n=10, p=0.05):
     """
-    STEP 1: Load breast cancer dataset.
-    STEP 2: Split into train-test (80-20).
-            Use random_state=42.
-    STEP 3: Standardize features.
-    STEP 4: Train LogisticRegression(max_iter=5000).
-    STEP 5: Compute:
-            - train_accuracy
-            - test_accuracy
-            - precision
-            - recall
-            - f1
-            - confusion matrix (optional to compute but not return)
+    STEP 1: Define Binomial(n,p) PMF:
+            P(X=k) = C(n,k)p^k(1-p)^(n-k)
 
-    In comments:
-        Explain what a False Negative represents medically.
+    STEP 2: Compute theoretical:
+            - P(X = 0)
+            - P(X = 2)
+            - P(X ≥ 1)
+
+    STEP 3: Simulate 100,000 inspections
+            using random_state=42.
+
+    STEP 4: Compute empirical:
+            - empirical P(X ≥ 1)
+
+    STEP 5: Compute absolute error BETWEEN:
+            theoretical P(X ≥ 1)
+            empirical P(X ≥ 1)
 
     RETURN:
-        train_accuracy,
-        test_accuracy,
-        precision,
-        recall,
-        f1
+        theoretical_P_0,
+        theoretical_P_2,
+        theoretical_P_ge_1,
+        empirical_P_ge_1,
+        absolute_error
     """
 
     raise NotImplementedError
 
 
 # =========================================================
-# QUESTION 4 – Logistic Regularization Path
+# QUESTION 4 – Geometric
 # =========================================================
 
-def cancer_logistic_regularization():
+def geometric_die():
     """
-    STEP 1: Load breast cancer dataset.
-    STEP 2: Split into train-test (80-20).
-    STEP 3: Standardize features.
-    STEP 4: For C in [0.01, 0.1, 1, 10, 100]:
-            - Train LogisticRegression(max_iter=5000, C=value)
-            - Compute train accuracy
-            - Compute test accuracy
+    STEP 1: Let p = 1/6.
 
-    STEP 5: Store results in dictionary:
-            {
-                C_value: (train_accuracy, test_accuracy)
-            }
+    STEP 2: Define Geometric PMF:
+            P(X=k) = (5/6)^(k-1)*(1/6)
 
-    In comments:
-        - What happens when C is very small?
-        - What happens when C is very large?
-        - Which case causes overfitting?
+    STEP 3: Compute theoretical:
+            - P(X = 1)
+            - P(X = 3)
+            - P(X > 4)
+
+    STEP 4: Simulate 200,000 experiments
+            using random_state=42.
+
+    STEP 5: Compute empirical:
+            - empirical P(X > 4)
+
+    STEP 6: Compute absolute error BETWEEN:
+            theoretical P(X > 4)
+            empirical P(X > 4)
 
     RETURN:
-        results_dictionary
+        theoretical_P_1,
+        theoretical_P_3,
+        theoretical_P_gt_4,
+        empirical_P_gt_4,
+        absolute_error
     """
 
     raise NotImplementedError
 
 
 # =========================================================
-# QUESTION 5 – Cross-Validation (Logistic Regression)
+# QUESTION 5 – Poisson
 # =========================================================
 
-def cancer_cross_validation():
+def poisson_customers(lam=12):
     """
-    STEP 1: Load breast cancer dataset.
-    STEP 2: Standardize entire dataset.
-    STEP 3: Perform 5-fold cross-validation
-            using LogisticRegression(C=1, max_iter=5000).
-            Use scoring='accuracy'.
+    STEP 1: Define Poisson PMF:
+            P(X=k) = e^(-λ) λ^k / k!
 
-    STEP 4: Compute:
-            - mean_accuracy
-            - std_accuracy
+    STEP 2: Compute theoretical:
+            - P(X = 0)
+            - P(X = 15)
+            - P(X ≥ 18)
 
-    In comments:
-        Explain why cross-validation is especially
-        important in medical diagnosis problems.
+    STEP 3: Simulate 100,000 hours
+            using random_state=42.
+
+    STEP 4: Compute empirical:
+            - empirical P(X ≥ 18)
+
+    STEP 5: Compute absolute error BETWEEN:
+            theoretical P(X ≥ 18)
+            empirical P(X ≥ 18)
 
     RETURN:
-        mean_accuracy,
-        std_accuracy
+        theoretical_P_0,
+        theoretical_P_15,
+        theoretical_P_ge_18,
+        empirical_P_ge_18,
+        absolute_error
     """
 
     raise NotImplementedError
